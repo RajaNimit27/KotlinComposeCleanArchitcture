@@ -37,14 +37,16 @@ fun PostListScreen(mainViewModel: MainViewModel) {
         ) {
             //add your code
             LaunchedEffect(key1 = Unit) {
-                getPostAPI(mainViewModel)
+               mainViewModel.fetchAndSavePosts()
             }
             val state = mainViewModel.uiStatePostList.collectAsState()
             when (state.value) {
                 is UiState.Success -> {
-                    (state.value as UiState.Success<List<PostEntity>>).data?.let {
-                        RecipeList(it)
-                    }
+                    val postsFromDb =  mainViewModel.postsFromDb.collectAsState(initial = emptyList())
+                    RecipeList(posts = postsFromDb.value)
+//                    (state.value as UiState.Success<List<PostEntity>>).data?.let {
+//                        RecipeList(it)
+//                    }
                 }
 
                 is UiState.Loading -> {
@@ -98,9 +100,4 @@ fun RecipeList(posts: List<PostEntity>) {
             PostListCard(postEntity = posts[i])
         }
     }
-}
-
-private fun getPostAPI(mainViewModel: MainViewModel) {
-    // Call the function to fetch recipes
-    mainViewModel.getPostList()
 }
