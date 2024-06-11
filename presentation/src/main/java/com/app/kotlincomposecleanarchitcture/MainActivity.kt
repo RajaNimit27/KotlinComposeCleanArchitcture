@@ -11,21 +11,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.app.kotlincomposecleanarchitcture.ui.PostListScreen
 import com.app.kotlincomposecleanarchitcture.ui.theme.KotlinComposeCleanArchitctureTheme
+import org.koin.androidx.compose.getKoin
+import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            KotlinComposeCleanArchitctureTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+           PostListScreen(mainViewModel = koinViewModel())
         }
     }
 }
