@@ -8,6 +8,7 @@ import data.datasource.local.PostDataBase
 import data.datasource.remote.ApiService
 import data.datasource.remote.RemoteDataSource
 import data.repository.PostRepositoryImpl
+import domain.repository.PostRepository
 import domain.usecase.GetPostsUseCase
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -72,7 +73,7 @@ val dataBaseModule= module {
 }
 
 val repositoryModule = module{
-    single { PostRepositoryImpl(get(),get()) }
+    single<PostRepository> { PostRepositoryImpl(get(),get()) }
 }
 
 val useCaseModule = module {

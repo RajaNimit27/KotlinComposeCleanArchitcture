@@ -37,13 +37,13 @@ fun PostListScreen(mainViewModel: MainViewModel) {
         ) {
             //add your code
             LaunchedEffect(key1 = Unit) {
-                getPostAPI(mainViewModel)
+               mainViewModel.getPostList()
             }
             val state = mainViewModel.uiStatePostList.collectAsState()
             when (state.value) {
                 is UiState.Success -> {
                     (state.value as UiState.Success<List<PostEntity>>).data?.let {
-                        RecipeList(it)
+                        PostList(it)
                     }
                 }
 
@@ -92,15 +92,10 @@ fun PostListCard(postEntity: PostEntity) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RecipeList(posts: List<PostEntity>) {
+fun PostList(posts: List<PostEntity>) {
     LazyColumn {
         items(posts.size) { i ->
             PostListCard(postEntity = posts[i])
         }
     }
-}
-
-private fun getPostAPI(mainViewModel: MainViewModel) {
-    // Call the function to fetch recipes
-    mainViewModel.getPostList()
 }

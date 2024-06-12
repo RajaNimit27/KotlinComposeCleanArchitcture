@@ -4,21 +4,30 @@ import common.UiState
 import data.datasource.local.PostDao
 import data.datasource.remote.RemoteDataSource
 import kotlinx.coroutines.flow.Flow
-import common.toResultFlow
 import data.model.PostEntity
 import domain.repository.PostRepository
+import kotlinx.coroutines.flow.flow
 
 
 class PostRepositoryImpl(
     private val remoteDataSource: RemoteDataSource,
     private val postDao: PostDao
 ) : PostRepository {
-    override suspend fun getPosts(): Flow<UiState<List<PostEntity>>> {
-        return toResultFlow {
-          //  val postEntities = remoteDataSource.getPosts()
-         //   postDao.insertAllPost(postEntities)
-            remoteDataSource.getPosts()
+
+    override fun fetchAndSavePosts(): Flow<UiState<List<PostEntity>>> = flow {
+        emit(UiState.Loading)
+        try {
+            val remotePosts = remoteDataSource.getPosts()
+            remotePosts.body()?.let { postDao.insertAllPost(it) }
+            emit(UiState.Success(remotePosts.body()))
+        } catch (e: Exception) {
+            emit(UiState.Error(e.message?:""))
         }
     }
+
+    override fun getPostsFromDb(): Flow<List<PostEntity>> {
+        return postDao.getPosts()
+    }
 }
+
 
