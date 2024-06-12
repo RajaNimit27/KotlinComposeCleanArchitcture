@@ -2,7 +2,7 @@ package com.app.kotlincomposecleanarchitcture.di
 
 import android.app.Application
 import androidx.room.Room
-import com.app.kotlincomposecleanarchitcture.ui.MainViewModel
+import com.app.kotlincomposecleanarchitcture.ui.viewmodel.MainViewModel
 import data.datasource.local.PostDao
 import data.datasource.local.PostDataBase
 import data.datasource.remote.ApiService

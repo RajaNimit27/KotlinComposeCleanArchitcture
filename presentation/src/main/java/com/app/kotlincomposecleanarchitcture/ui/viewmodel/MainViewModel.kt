@@ -1,4 +1,4 @@
-package com.app.kotlincomposecleanarchitcture.ui
+package com.app.kotlincomposecleanarchitcture.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
