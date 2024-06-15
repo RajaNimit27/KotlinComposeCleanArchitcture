@@ -1,4 +1,4 @@
-package com.app.kotlincomposecleanarchitcture.ui
+package com.app.kotlincomposecleanarchitcture.ui.composeui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
